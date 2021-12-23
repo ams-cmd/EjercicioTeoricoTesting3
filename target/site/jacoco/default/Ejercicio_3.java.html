@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Ejercicio_3.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BC01_ISO_II_ejercTeorico</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Ejercicio_3.java</span></div><h1>Ejercicio_3.java</h1><pre class="source lang-java linenums">import java.util.*;
+
+<span class="nc" id="L3">public class Ejercicio_3 {</span>
+<span class="fc" id="L4">    public static Scanner tc = new Scanner(System.in);</span>
+<span class="fc" id="L5">    public static int adecuacion_funcional[][] = { { 0, 0, 0 }, { 1, 1, 2 }, { 2, 1, 2 }, { 2, 2, 3 }, { 3, 3, 4 }, { 4, 5, 5 } };</span>
+<span class="fc" id="L6">    public static int mantenibilidad[][] = { { 0, 0, 0, 0 }, { 1, 1, 0, 1, 1 }, { 2, 2, 1, 2, 1 }, { 2, 2, 2, 3, 2 },</span>
+<span class="fc" id="L7">            { 3, 3, 3, 4, 4 }, { 4, 5, 5, 5, 4 } };</span>
+<span class="fc" id="L8">    static int calidad_global[][] = { { 1, 1, 1, 1, 1 }, { 1, 2, 2, 2, 2 }, { 2, 2, 3, 3, 3 }, { 3, 3, 3, 3, 4 },</span>
+<span class="fc" id="L9">            { 3, 3, 4, 4, 5 } };</span>
+    public static int rang;
+    public static int completitud;
+    public static int  correcion;
+    public static int pertinencia;
+    public static int modulo;
+    public static int reusable;
+    public static int analiza;
+    public static int cm;
+    public static int cp;
+    public static int af;
+<span class="fc" id="L20">    public static int min;</span>
+
+    public static void main(String[] args) throws Exception {
+<span class="nc" id="L23">        principal();</span>
+
+<span class="nc" id="L25">    }</span>
+    public static boolean principal() {
+<span class="fc" id="L27">        boolean a=true;</span>
+
+<span class="fc" id="L29">            boolean certificable = false;</span>
+<span class="fc" id="L30">            System.out.println(&quot;1. Calcular Calidad Global y posibilidad de Certificación&quot;);</span>
+<span class="fc" id="L31">            System.out.println(&quot;2. Salir&quot;);</span>
+
+            try {
+<span class="fc" id="L34">                int opcion=1;</span>
+
+<span class="fc" id="L36">                            System.out.println(&quot;Rellene los siguientes datos: &quot;);</span>
+<span class="fc" id="L37">                            af = adecuacion_menu();</span>
+<span class="fc" id="L38">                            int mang = mantenibilidad_menu();</span>
+
+<span class="fc" id="L40">                            System.out.println(&quot;\nAdecuación Funcional: &quot; + af);</span>
+
+<span class="fc" id="L42">                            System.out.println(&quot;\nMantenibilidad: &quot; + mang);</span>
+<span class="fc" id="L43">                            System.out.println(&quot;\nCalculado calidad global...\n&quot;);</span>
+<span class="fc" id="L44">                            int cfg = calcular_cg(mang, af, calidad_global);</span>
+<span class="fc" id="L45">                            System.out.println(&quot;Calidad Global: &quot; + cfg);</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">                            if (cfg &gt;= 3)</span>
+<span class="nc" id="L47">                                certificable = true;</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">                            if (certificable) {</span>
+<span class="nc" id="L49">                                System.out.println(&quot;\nSe puede certificar el Producto Software\n&quot;);</span>
+
+<span class="nc" id="L51">                            } else {</span>
+<span class="fc" id="L52">                                System.out.println(</span>
+<span class="fc" id="L53">                                        &quot;\nMe temo que el producto no cumple con los requerimientos para ser certificado...\n&quot;);</span>
+                            }
+<span class="fc" id="L55">                            System.out.println(&quot;\nSaliendo&quot;);</span>
+
+<span class="pc" id="L57">            } catch (InputMismatchException e) {</span>
+<span class="nc" id="L58">                System.out.println(&quot;\nIntroduzca Unicamente números\n&quot;);</span>
+<span class="nc" id="L59">                a=false;</span>
+<span class="nc" id="L60">                tc.next();</span>
+            }
+
+<span class="fc" id="L63">        return a;</span>
+
+
+    }
+
+    public static int adecuacion_menu() {
+
+<span class="fc" id="L70">        System.out.println(&quot;Inserte la completitud funcional&quot;);</span>
+<span class="fc" id="L71">        completitud = 10;</span>
+<span class="fc" id="L72">        System.out.println(&quot;Inserte la corrección funcional&quot;);</span>
+<span class="fc" id="L73">        correcion = 34;</span>
+<span class="fc" id="L74">        System.out.println(&quot;Inserte la pertinencia funcional&quot;);</span>
+<span class="fc" id="L75">        pertinencia = 85;</span>
+
+<span class="fc" id="L77">        af = calcular_af(completitud, correcion, pertinencia, adecuacion_funcional);</span>
+<span class="fc" id="L78">        System.out.println(&quot;La adecuacion es de: &quot;+af);</span>
+
+<span class="fc" id="L80">        return af;</span>
+
+    }
+
+    public static int mantenibilidad_menu() {
+<span class="fc" id="L85">        System.out.println(&quot;Inserte la modularidad&quot;);</span>
+<span class="fc" id="L86">        modulo = 66;</span>
+<span class="fc" id="L87">        System.out.println(&quot;Inserte la reusabilidad&quot;);</span>
+<span class="fc" id="L88">        reusable = 9;</span>
+<span class="fc" id="L89">        System.out.println(&quot;Inserte la analizabilidad&quot;);</span>
+<span class="fc" id="L90">        analiza = 54;</span>
+<span class="fc" id="L91">        System.out.println(&quot;Inserte la capacidad para de ser modificado&quot;);</span>
+<span class="fc" id="L92">        cm = 90;</span>
+<span class="fc" id="L93">        System.out.println(&quot;Inserte la capacidad para de ser probado&quot;);</span>
+<span class="fc" id="L94">        cp = 23;</span>
+
+<span class="fc" id="L96">        min = mantenibilidad(modulo, reusable, analiza, cm, cp, mantenibilidad);</span>
+<span class="fc" id="L97">        System.out.println(&quot;La manteabilidad es de: &quot;+min);</span>
+
+<span class="fc" id="L99">        return min;</span>
+
+    }
+
+    public static int insertarNumero() {
+<span class="nc" id="L104">        int n = tc.nextInt();</span>
+<span class="nc bnc" id="L105" title="All 4 branches missed.">        if (n &lt; 0 || n &gt; 100) {</span>
+<span class="nc bnc" id="L106" title="All 4 branches missed.">            while (n &lt; 0 || n &gt; 100) {</span>
+<span class="nc" id="L107">                System.out.println(&quot;Error, inserte de nuevo&quot;);</span>
+<span class="nc" id="L108">                n = tc.nextInt();</span>
+            }
+        }
+<span class="nc" id="L111">        return n;</span>
+    }
+
+    public static int calcular_af(int completitud, int correcion, int pertinencia, int adecuacion_funcional[][]) {
+<span class="fc" id="L115">        int valor_completitud = adecuacion_funcional[rango_mediciones(completitud)][0];</span>
+<span class="fc" id="L116">        int valor_correccion = adecuacion_funcional[rango_mediciones(correcion)][1];</span>
+<span class="fc" id="L117">        int valor_pertinencia = adecuacion_funcional[rango_mediciones(pertinencia)][2];</span>
+<span class="fc" id="L118">        int[] array_af = { valor_completitud, valor_correccion, valor_pertinencia };</span>
+<span class="fc" id="L119">        return min(array_af);</span>
+    }
+
+    public static int min(int[] nums) {
+<span class="fc" id="L123">        int min = 0;</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">        if (nums != null) {</span>
+<span class="fc" id="L125">            min = nums[0];</span>
+        }
+<span class="fc bfc" id="L127" title="All 2 branches covered.">        for (int i = 0; i &lt; nums.length; i++) {</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">            if (nums[i] &lt; min) {</span>
+<span class="fc" id="L129">                min = nums[i];</span>
+            }
+        }
+<span class="fc" id="L132">        return min;</span>
+    }
+
+    public static int rango_mediciones(int rango) {
+<span class="fc" id="L136">        rang=rango;</span>
+<span class="fc" id="L137">        int fila = 0;</span>
+<span class="fc" id="L138">        System.out.println(&quot;Valor de rang: &quot;+Ejercicio_3.rang);</span>
+<span class="pc bpc" id="L139" title="1 of 4 branches missed.">        if (rang &gt;= 0 &amp;&amp; rang &lt; 10) {</span>
+<span class="fc" id="L140">            fila = 0;</span>
+        }
+<span class="fc bfc" id="L142" title="All 4 branches covered.">        if (rang &gt;= 10 &amp;&amp; rang &lt; 35) {</span>
+<span class="fc" id="L143">            fila = 1;</span>
+        }
+<span class="pc bpc" id="L145" title="1 of 4 branches missed.">        if (rang &gt;= 35 &amp;&amp; rang &lt; 50) {</span>
+<span class="nc" id="L146">            fila = 2;</span>
+        }
+<span class="fc bfc" id="L148" title="All 4 branches covered.">        if (rang &gt;= 50 &amp;&amp; rang &lt; 70) {</span>
+<span class="fc" id="L149">            fila = 3;</span>
+        }
+<span class="fc bfc" id="L151" title="All 4 branches covered.">        if (rang &gt;= 70 &amp;&amp; rang &lt; 90) {</span>
+<span class="fc" id="L152">            fila = 4;</span>
+        }
+<span class="pc bpc" id="L154" title="1 of 4 branches missed.">        if (rang &gt;= 90 &amp;&amp; rang &lt;= 100) {</span>
+<span class="fc" id="L155">            fila = 5;</span>
+        }
+<span class="pc bpc" id="L157" title="2 of 4 branches missed.">        if (rang &lt; 0 || rang &gt; 100) {</span>
+<span class="nc" id="L158">            fila = -1;</span>
+        }
+        ;
+
+<span class="fc" id="L162">        return fila;</span>
+    }
+
+    public static int mantenibilidad(int modularidad, int reusabilidad, int analizabilidad,
+                                     int capacidad_de_ser_modificado, int capacidad_de_ser_probado, int manteabilidad[][]) {
+<span class="fc" id="L167">        int mini = 0;</span>
+<span class="fc" id="L168">        int vector_manteabilidad[] = new int[5];</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        for (int i = 0; i &lt; manteabilidad.length; i++) {</span>
+
+<span class="fc bfc" id="L171" title="All 2 branches covered.">            if (i == 0) {</span>
+<span class="fc" id="L172">                int r = rango_mediciones(modularidad);</span>
+<span class="fc" id="L173">                vector_manteabilidad[i] = manteabilidad[r][0];</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">            } else if (i == 1) {</span>
+<span class="fc" id="L175">                int r = rango_mediciones(reusabilidad);</span>
+<span class="fc" id="L176">                vector_manteabilidad[i] = manteabilidad[r][1];</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">            } else if (i == 2) {</span>
+<span class="fc" id="L178">                int r = rango_mediciones(analizabilidad);</span>
+<span class="fc" id="L179">                vector_manteabilidad[i] = manteabilidad[r][2];</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">            } else if (i == 3) {</span>
+<span class="fc" id="L181">                int r = rango_mediciones(capacidad_de_ser_modificado);</span>
+<span class="fc" id="L182">                vector_manteabilidad[i] = manteabilidad[r][3];</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">            } else if (i == 4) {</span>
+<span class="fc" id="L184">                int r = rango_mediciones(capacidad_de_ser_probado);</span>
+<span class="fc" id="L185">                vector_manteabilidad[i] = manteabilidad[r][4];</span>
+            }
+
+        }
+<span class="fc" id="L189">        mini = min(vector_manteabilidad);</span>
+<span class="fc" id="L190">        return mini;</span>
+    }
+
+    public static int calcular_cg(int mantenibilidad, int adecuacion_funcional, int[][] calidad_global) {
+<span class="fc" id="L194">        return calidad_global[adecuacion_funcional][mantenibilidad];</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
